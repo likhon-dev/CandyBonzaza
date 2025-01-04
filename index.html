@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern interactive goods purchase game with demo balance and real-time feedback.">
+  <meta name="keywords" content="Goods Game, Modern UI, Interactive, Balance System, HTML5 Game">
+  <meta name="author" content="Likhon Sheikh">
+  <meta name="theme-color" content="#121212">
+  <title>Modern Goods Game</title>
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #121212;
+      --text-color: #ffffff;
+      --accent-color: #FFD700;
+      --hover-color: #3E8E41;
+      --font-family: 'Poppins', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+      font-family: var(--font-family);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: var(--secondary-color);
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    header .balance {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      font-weight: bold;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 10px;
+      min-height: 100vh;
+    }
+
+    .goods-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      width: 90%;
+      max-width: 1200px;
+    }
+
+    .good-item {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .good-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .good-item img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      object-fit: cover;
+    }
+
+    .good-item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+    }
+
+    .good-item p {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    .good-item button {
+      background: var(--primary-color);
+      color: var(--text-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .good-item button:hover {
+      background: var(--hover-color);
+    }
+
+    footer {
+      background: var(--secondary-color);
+      color: var(--text-color);
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      position: relative;
+    }
+
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Goods Game</h1>
+    <div class="balance">Balance: <span id="balance">999,999,999 BDT</span></div>
+  </header>
+  <main>
+    <div class="goods-container">
+      <!-- Goods items -->
+      <div class="good-item" onclick="buyGood('Gold Coin', 100)">
+        <img src="https://via.placeholder.com/150?text=Gold" alt="Gold Coin">
+        <h3>Gold Coin</h3>
+        <p>Price: 100 BDT</p>
+        <button>Buy Now</button>
+      </div>
+      <div class="good-item" onclick="buyGood('Diamond', 500)">
+        <img src="https://via.placeholder.com/150?text=Diamond" alt="Diamond">
+        <h3>Diamond</h3>
+        <p>Price: 500 BDT</p>
+        <button>Buy Now</button>
+      </div>
+      <div class="good-item" onclick="buyGood('Platinum Box', 1000)">
+        <img src="https://via.placeholder.com/150?text=Platinum" alt="Platinum Box">
+        <h3>Platinum Box</h3>
+        <p>Price: 1000 BDT</p>
+        <button>Buy Now</button>
+      </div>
+      <div class="good-item" onclick="buyGood('Sapphire', 2000)">
+        <img src="https://via.placeholder.com/150?text=Sapphire" alt="Sapphire">
+        <h3>Sapphire</h3>
+        <p>Price: 2000 BDT</p>
+        <button>Buy Now</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>Developed by <a href="https://likhon.dev" target="_blank">Likhon Sheikh</a> | &copy; 2025</p>
+  </footer>
+
+  <audio id="success-sound" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
+  <audio id="error-sound" src="https://www.fesliyanstudios.com/play-mp3/392"></audio>
+
+  <script>
+    let balance = 999999999;
+
+    function updateBalance() {
+      document.getElementById("balance").innerText = balance.toLocaleString() + " BDT";
+    }
+
+    function playSound(type) {
+      const soundId = type === 'success' ? 'success-sound' : 'error-sound';
+      document.getElementById(soundId).play();
+    }
+
+    function buyGood(name, price) {
+      if (balance >= price) {
+        balance -= price;
+        playSound('success');
+        updateBalance();
+        alert(`🎉 Successfully purchased ${name} for ${price} BDT!`);
+      } else {
+        playSound('error');
+        alert(`❌ Insufficient balance to purchase ${name}.`);
+      }
+    }
+
+    updateBalance();
+  </script>
+</body>
+</html>
