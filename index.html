@@ -1,221 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A modern interactive goods purchase game with demo balance and real-time feedback.">
-  <meta name="keywords" content="Goods Game, Modern UI, Interactive, Balance System, HTML5 Game">
-  <meta name="author" content="Likhon Sheikh">
-  <meta name="theme-color" content="#121212">
-  <title>Modern Goods Game</title>
-  <style>
-    :root {
-      --primary-color: #4CAF50;
-      --secondary-color: #121212;
-      --text-color: #ffffff;
-      --accent-color: #FFD700;
-      --hover-color: #3E8E41;
-      --font-family: 'Poppins', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Bonanza</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+    <style>
+        :root {
+            --primary: #FF69B4;
+            --secondary: #8A2BE2;
+            --accent: #FFD700;
+            --background: #FDF5E6;
+            --text: #333;
+            --light-shadow: rgba(255, 255, 255, 0.5);
+            --dark-shadow: rgba(0, 0, 0, 0.1);
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-      font-family: var(--font-family);
-      color: var(--text-color);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            padding: 1rem;
+            overflow: hidden;
+        }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background-color: var(--secondary-color);
-      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+        .game-container {
+            background: var(--background);
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px var(--dark-shadow);
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
 
-    header h1 {
-      font-size: 1.8rem;
-      color: var(--accent-color);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px var(--light-shadow);
+        }
 
-    header .balance {
-      font-size: 1.2rem;
-      color: var(--primary-color);
-      font-weight: bold;
-      animation: fadeIn 2s ease-in-out;
-    }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
 
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 10px;
-      min-height: 100vh;
-    }
+        .cell {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px var(--dark-shadow);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
 
-    .goods-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      width: 90%;
-      max-width: 1200px;
-    }
+        .cell:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px var(--dark-shadow);
+        }
 
-    .good-item {
-      background: #1e1e1e;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
+        .cell img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
 
-    .good-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    }
+        .controls {
+            margin-bottom: 2rem;
+        }
 
-    .good-item img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin-bottom: 15px;
-      object-fit: cover;
-    }
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px var(--dark-shadow);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
 
-    .good-item h3 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-      color: var(--accent-color);
-    }
+        .btn:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px var(--dark-shadow);
+        }
 
-    .good-item p {
-      font-size: 1rem;
-      color: #ccc;
-      margin-bottom: 15px;
-    }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
-    .good-item button {
-      background: var(--primary-color);
-      color: var(--text-color);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.3s;
-    }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+        }
 
-    .good-item button:hover {
-      background: var(--hover-color);
-    }
+        .stat {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px var(--dark-shadow);
+            width: 100px;
+            text-align: center;
+        }
 
-    footer {
-      background: var(--secondary-color);
-      color: var(--text-color);
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9rem;
-      position: relative;
-    }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
 
-    footer a {
-      color: var(--accent-color);
-      text-decoration: none;
-    }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
 
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+        .loading {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Goods Game</h1>
-    <div class="balance">Balance: <span id="balance">999,999,999 BDT</span></div>
-  </header>
-  <main>
-    <div class="goods-container">
-      <!-- Goods items -->
-      <div class="good-item" onclick="buyGood('Gold Coin', 100)">
-        <img src="https://via.placeholder.com/150?text=Gold" alt="Gold Coin">
-        <h3>Gold Coin</h3>
-        <p>Price: 100 BDT</p>
-        <button>Buy Now</button>
-      </div>
-      <div class="good-item" onclick="buyGood('Diamond', 500)">
-        <img src="https://via.placeholder.com/150?text=Diamond" alt="Diamond">
-        <h3>Diamond</h3>
-        <p>Price: 500 BDT</p>
-        <button>Buy Now</button>
-      </div>
-      <div class="good-item" onclick="buyGood('Platinum Box', 1000)">
-        <img src="https://via.placeholder.com/150?text=Platinum" alt="Platinum Box">
-        <h3>Platinum Box</h3>
-        <p>Price: 1000 BDT</p>
-        <button>Buy Now</button>
-      </div>
-      <div class="good-item" onclick="buyGood('Sapphire', 2000)">
-        <img src="https://via.placeholder.com/150?text=Sapphire" alt="Sapphire">
-        <h3>Sapphire</h3>
-        <p>Price: 2000 BDT</p>
-        <button>Buy Now</button>
-      </div>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
     </div>
-  </main>
-  <footer>
-    <p>Developed by <a href="https://likhon.dev" target="_blank">Likhon Sheikh</a> | &copy; 2025</p>
-  </footer>
 
-  <audio id="success-sound" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
-  <audio id="error-sound" src="https://www.fesliyanstudios.com/play-mp3/392"></audio>
+    <div class="game-container">
+        <h1>Candy Bonanza</h1>
+        <div class="grid" id="grid"></div>
+        <div class="controls">
+            <button class="btn" id="spinBtn">Spin Now</button>
+        </div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="score">0</div>
+                <div class="stat-label">Score</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="freeSpins">0</div>
+                <div class="stat-label">Free Spins</div>
+            </div>
+        </div>
+    </div>
 
-  <script>
-    let balance = 999999999;
+    <script>
+        const grid = document.getElementById("grid");
+        const spinBtn = document.getElementById("spinBtn");
+        const scoreDisplay = document.getElementById("score");
+        const freeSpinsDisplay = document.getElementById("freeSpins");
+        const loading = document.getElementById("loading");
 
-    function updateBalance() {
-      document.getElementById("balance").innerText = balance.toLocaleString() + " BDT";
-    }
+        const symbols = [
+            { type: "wild", src: "https://via.placeholder.com/80/FF69B4/FFFFFF?text=Wild" },
+            { type: "freeSpin", src: "https://via.placeholder.com/80/FFD700/333333?text=Free+Spin" },
+            { type: "red", src: "https://via.placeholder.com/80/FF6347/FFFFFF?text=Red" },
+            { type: "blue", src: "https://via.placeholder.com/80/4682B4/FFFFFF?text=Blue" },
+            { type: "green", src: "https://via.placeholder.com/80/3CB371/FFFFFF?text=Green" },
+            { type: "yellow", src: "https://via.placeholder.com/80/FFD700/333333?text=Yellow" },
+            { type: "purple", src: "https://via.placeholder.com/80/8A2BE2/FFFFFF?text=Purple" },
+        ];
 
-    function playSound(type) {
-      const soundId = type === 'success' ? 'success-sound' : 'error-sound';
-      document.getElementById(soundId).play();
-    }
+        let score = 0;
+        let freeSpins = 0;
 
-    function buyGood(name, price) {
-      if (balance >= price) {
-        balance -= price;
-        playSound('success');
-        updateBalance();
-        alert(`🎉 Successfully purchased ${name} for ${price} BDT!`);
-      } else {
-        playSound('error');
-        alert(`❌ Insufficient balance to purchase ${name}.`);
-      }
-    }
+        function initializeGrid() {
+            grid.innerHTML = "";
+            for (let i = 0; i < 36; i++) {
+                const cell = document.createElement("div");
+                cell.classList.add("cell");
+                addSymbol(cell);
+                grid.appendChild(cell);
+            }
+        }
 
-    updateBalance();
-  </script>
+        function addSymbol(cell) {
+            const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+            const img = document.createElement("img");
+            img.src = randomSymbol.src;
+            img.alt = randomSymbol.type;
+            img.dataset.type = randomSymbol.type;
+            cell.appendChild(img);
+        }
+
+        function spin() {
+            spinBtn.disabled = true;
+            setTimeout(() => {
+                initializeGrid();
+                calculateScore();
+                spinBtn.disabled = false;
+            }, 1000);
+        }
+
+        function calculateScore() {
+            const cells = Array.from(grid.children);
+            const freeSpinCount = cells.filter(cell => cell.querySelector("img").dataset.type === "freeSpin").length;
+            const wildCount = cells.filter(cell => cell.querySelector("img").dataset.type === "wild").length;
+
+            score += wildCount * 5 + freeSpinCount * 10;
+            freeSpins += Math.floor(freeSpinCount / 3);
+
+            scoreDisplay.textContent = score;
+            freeSpinsDisplay.textContent = freeSpins;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                loading.classList.add("hidden");
+                initializeGrid();
+            }, 2000);
+
+            spinBtn.addEventListener("click", spin);
+        });
+    </script>
 </body>
 </html>
